@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AP Top 25 Poll — Prototypes</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Condensed:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    background: #f2f2f2;
+    color: #191919;
+    min-height: 100vh;
+}
+
+.masthead {
+    background: #191919;
+    border-bottom: 3px solid #ff1818;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.masthead-logo {
+    font-family: 'IBM Plex Condensed', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ff1818;
+    letter-spacing: -0.02em;
+}
+.masthead-label {
+    font-family: 'IBM Plex Condensed', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #888;
+}
+
+.wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+}
+
+.page-eyebrow {
+    font-family: 'IBM Plex Condensed', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #da1026;
+    margin-bottom: 0.5rem;
+}
+
+h1 {
+    font-family: 'IBM Plex Condensed', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    font-stretch: condensed;
+    text-transform: uppercase;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: #191919;
+    margin-bottom: 0.5rem;
+}
+
+.page-sub {
+    font-size: 0.875rem;
+    color: #666;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #e6e6e7;
+}
+
+.section-label {
+    font-family: 'IBM Plex Condensed', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #666;
+    margin-bottom: 0.75rem;
+}
+
+.prototype-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1px;
+    background: #e6e6e7;
+    border: 1px solid #e6e6e7;
+    margin-bottom: 3rem;
+}
+
+.prototype-card {
+    background: #ffffff;
+    padding: 1.25rem 1.5rem;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: background 0.12s;
+    position: relative;
+}
+.prototype-card:hover { background: #f2f2f2; }
+.prototype-card::after {
+    content: '→';
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    font-size: 0.875rem;
+    color: #c4c4c4;
+    transition: color 0.12s, transform 0.12s;
+}
+.prototype-card:hover::after {
+    color: #da1026;
+    transform: translateX(3px);
+}
+
+.card-tag {
+    display: inline-block;
+    font-family: 'IBM Plex Condensed', sans-serif;
+    font-size: 0.55rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.15rem 0.4rem;
+    border-radius: 2px;
+    width: fit-content;
+}
+.tag-ap     { background: #191919; color: #fff; }
+.tag-bold   { background: #da1026; color: #fff; }
+.tag-light  { background: #e6e6e7; color: #666; }
+.tag-latest { background: #0042a9; color: #fff; }
+
+.card-title {
+    font-family: 'IBM Plex Condensed', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    font-stretch: semi-condensed;
+    color: #191919;
+    padding-right: 1.5rem;
+}
+
+.card-desc {
+    font-size: 0.75rem;
+    color: #666;
+    line-height: 1.4;
+}
+
+.footer {
+    border-top: 1px solid #e6e6e7;
+    padding-top: 1.5rem;
+    font-size: 0.7rem;
+    color: #a8a8a9;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+    <div class="masthead-logo">AP</div>
+    <div class="masthead-label">Design Prototypes</div>
+</header>
+
+<div class="wrap">
+
+    <div class="page-eyebrow">Product Design</div>
+    <h1>AP Top 25 Poll</h1>
+    <p class="page-sub">Prototype index — select a version to preview</p>
+
+    <div class="section-label">All Versions</div>
+    <div class="prototype-grid">
+
+        <a class="prototype-card" href="cfb-rankings-ap.html">
+            <span class="card-tag tag-ap tag-latest">AP Style · Latest</span>
+            <div class="card-title">AP Style — Light</div>
+            <div class="card-desc">IBM Plex fonts, Maple design tokens, light background. Full feature set.</div>
+        </a>
+
+        <a class="prototype-card" href="cfb-rankings-light.html">
+            <span class="card-tag tag-light">Light</span>
+            <div class="card-title">Bold Design — Light</div>
+            <div class="card-desc">Barlow Condensed, bold typography, light background. Full feature set.</div>
+        </a>
+
+        <a class="prototype-card" href="cfb-rankings-bold.html">
+            <span class="card-tag tag-bold">Dark</span>
+            <div class="card-title">Bold Design — Dark</div>
+            <div class="card-desc">Barlow Condensed, bold typography, dark background. Full feature set.</div>
+        </a>
+
+        <a class="prototype-card" href="cfb-rankings.html">
+            <span class="card-tag tag-ap">AP Style</span>
+            <div class="card-title">AP Style — Original</div>
+            <div class="card-desc">First AP Maple implementation. Simpler feature set, no team logos.</div>
+        </a>
+
+        <a class="prototype-card" href="ap_cfb_top25_v3.html">
+            <span class="card-tag tag-ap">AP Style · v3</span>
+            <div class="card-title">AP Style — v3 Snapshot</div>
+            <div class="card-desc">Saved snapshot of the AP style at version 3.</div>
+        </a>
+
+    </div>
+
+    <div class="footer">
+        <span>AP Product Design · CFB Top 25 Poll</span>
+        <span>Week 14 of 16 · 2024 Season</span>
+    </div>
+
+</div>
+
+</body>
+</html>
