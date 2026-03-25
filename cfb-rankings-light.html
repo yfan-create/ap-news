@@ -20,6 +20,19 @@
     --text:   #111111;
     --muted:  #777777;
     --muted2: #bbbbbb;
+
+    /* AP Maple tokens used by poll status */
+    --ap-success-bg:      #f4fdee;
+    --ap-success-border:  #00945a;
+    --ap-error-bg:        #fff4f0;
+    --ap-error-border:    #da1026;
+    --ap-stroke-01:       0.0625rem;
+    --ap-stroke-02:       0.125rem;
+    --ap-radius-lg:       1.5rem;
+    --ap-radius-sm:       0.1875rem;
+    --ap-border-moderate: #c4c4c4;
+    --ap-bg-tertiary:     #efefef;
+    --ap-text-secondary:  #666666;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0 !important; padding: 0 !important; }
@@ -32,13 +45,7 @@ body {
     min-height: 100vh !important;
     overflow-x: hidden !important;
 }
-body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background-image: linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events: none; z-index: 0;
-}
+body::before { display: none; }
 
 .wrap { max-width: 920px; margin: 0 auto !important; padding: 2.5rem 1.5rem !important; position: relative; z-index: 1; }
 
@@ -90,26 +97,59 @@ h1 span { color: var(--text) !important; -webkit-text-stroke: 0; }
 }
 .icon-btn:hover { border-color: var(--text) !important; color: var(--text) !important; }
 
-/* ── POLL STATUS ── */
-.poll-status {
-    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;
-    gap: 0.75rem; padding: 0.6rem 1rem !important; border: 1px solid !important;
-    margin-bottom: 1.25rem !important; font-family: 'Barlow Condensed', sans-serif !important;
+/* ── POLL STATUS — compact, right-aligned in header ── */
+.page-header-top {
+    display: flex !important;
+    align-items: flex-end !important;
+    justify-content: space-between !important;
+    gap: 1rem;
 }
-.poll-status.open  { background: rgba(0,196,106,0.06) !important; border-color: rgba(0,196,106,0.35) !important; }
-.poll-status.closed { background: rgba(232,0,28,0.06) !important; border-color: rgba(232,0,28,0.35) !important; }
-.status-left { display: flex; align-items: center; gap: 0.75rem; }
-.status-pill { font-size: 0.65rem !important; font-weight: 700 !important; letter-spacing: 0.12em !important; text-transform: uppercase !important; padding: 0.2rem 0.6rem !important; }
-.open .status-pill  { background: var(--green) !important; color: #ffffff !important; }
-.closed .status-pill { background: var(--red) !important; color: #ffffff !important; }
-.status-text { font-size: 0.75rem !important; color: var(--muted) !important; }
-.toggle-wrap { display: flex; align-items: center; gap: 0.6rem; font-size: 0.7rem !important; color: var(--muted) !important; }
-.toggle { position: relative; display: inline-block; width: 2.2rem; height: 1.2rem; }
+.poll-status {
+    display: inline-flex !important; align-items: center !important; gap: 0.5rem !important;
+    padding: 0.3rem 0.5rem 0.3rem 0.65rem !important;
+    border: var(--ap-stroke-02) solid !important;
+    border-radius: var(--ap-radius-lg) !important;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07) !important;
+    font-family: 'IBM Plex Sans', sans-serif !important;
+    margin-bottom: 0 !important; flex-shrink: 0;
+    align-self: flex-end !important;
+}
+.poll-status.open  { background: var(--ap-success-bg) !important; border-color: var(--ap-success-border) !important; }
+.poll-status.closed { background: var(--ap-error-bg) !important; border-color: var(--ap-error-border) !important; }
+.status-left { display: flex; align-items: center; gap: 0.4rem; }
+.status-pill {
+    font-family: 'IBM Plex Sans', sans-serif !important;
+    font-size: 0.55rem !important; font-weight: 700 !important;
+    letter-spacing: 0.1em !important; text-transform: uppercase !important;
+    padding: 0.15rem 0.45rem !important; border-radius: 100px !important;
+}
+.open .status-pill  { background: var(--ap-success-border) !important; color: #ffffff !important; }
+.closed .status-pill { background: var(--ap-error-border) !important; color: #ffffff !important; }
+.status-text { display: none !important; }
+.toggle-wrap {
+    display: flex !important; align-items: center !important; gap: 0.35rem !important;
+    font-family: 'IBM Plex Sans', sans-serif !important;
+    font-size: 0.6rem !important; color: var(--ap-text-secondary) !important;
+    border-left: var(--ap-stroke-01) solid var(--ap-border-moderate) !important;
+    padding-left: 0.5rem !important;
+}
+.toggle { position: relative; display: inline-block; width: 1.8rem; height: 1rem; }
 .toggle input { opacity: 0 !important; width: 0; height: 0; }
-.slider { position: absolute; inset: 0; background: var(--bg4) !important; border: 1px solid var(--line2) !important; cursor: pointer; }
-.slider::before { content: ''; position: absolute; height: 0.7rem; width: 0.7rem; left: 0.22rem; top: 0.2rem; background: var(--muted) !important; transition: 0.2s; }
-input:checked + .slider { background: rgba(0,196,106,0.15) !important; border-color: var(--green) !important; }
-input:checked + .slider::before { transform: translateX(1rem); background: var(--green) !important; }
+.slider {
+    position: absolute; inset: 0;
+    background: var(--ap-bg-tertiary) !important;
+    border: var(--ap-stroke-01) solid var(--ap-border-moderate) !important;
+    border-radius: 100px !important; cursor: pointer; transition: 0.2s;
+}
+.slider::before {
+    content: ''; position: absolute;
+    height: 0.6rem; width: 0.6rem;
+    left: 0.18rem; top: 0.18rem;
+    background: var(--ap-text-secondary) !important;
+    border-radius: 50%; transition: 0.2s;
+}
+input:checked + .slider { background: rgba(0,148,90,0.12) !important; border-color: var(--ap-success-border) !important; }
+input:checked + .slider::before { transform: translateX(0.8rem); background: var(--ap-success-border) !important; }
 
 /* ── WEEK FILTER ── */
 .week-filter-bar { display: none; align-items: center; gap: 0.75rem; margin-bottom: 1rem !important; }
@@ -119,10 +159,8 @@ input:checked + .slider::before { transform: translateX(1rem); background: var(-
     font-family: 'Barlow Condensed', sans-serif !important; font-size: 0.8rem !important; font-weight: 600 !important;
     letter-spacing: 0.05em !important; text-transform: uppercase !important;
     color: var(--text) !important; background: var(--bg2) !important;
-    border: 1px solid var(--line2) !important; padding: 0.35rem 2rem 0.35rem 0.75rem !important;
-    cursor: pointer; outline: none; appearance: none; -webkit-appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none' viewBox='0 0 10 6'%3E%3Cpath stroke='%23888' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' d='M1 1l4 4 4-4'/%3E%3C/svg%3E") !important;
-    background-repeat: no-repeat; background-position: right 0.6rem center;
+    border: 1px solid var(--line2) !important; padding: 0.35rem 0.75rem !important;
+    cursor: pointer; outline: none;
 }
 .week-select:hover, .week-select:focus { border-color: var(--text) !important; }
 .week-select option { background: var(--bg3) !important; }
@@ -353,10 +391,22 @@ input:checked + .slider::before { transform: translateX(1rem); background: var(-
 
     <!-- HEADER -->
     <div class="page-header">
-        <div class="eyebrow"><span class="live-dot" id="liveDot"></span><span id="eyebrowText">Live Poll</span></div>
-        <h1>AP Top <span>25</span> Poll</h1>
-        <div class="title-week">Week <span id="weekTitleNum">14</span> of 16</div>
-
+        <div class="page-header-top">
+            <div>
+                <div class="eyebrow"><span class="live-dot" id="liveDot"></span><span id="eyebrowText">Live Poll</span></div>
+                <h1>AP Top <span>25</span> Poll</h1>
+                <div class="title-week">Week <span id="weekTitleNum">14</span> of 16</div>
+            </div>
+            <div class="poll-status open" id="pollStatus">
+                <div class="status-left">
+                    <span class="status-pill" id="statusPill">Open</span>
+                </div>
+                <div class="toggle-wrap">
+                    <span id="pollToggleLabel">Close</span>
+                    <label class="toggle"><input type="checkbox" id="pollToggle" onchange="togglePoll(this.checked)"><span class="slider"></span></label>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- TOOLBAR -->
@@ -371,18 +421,6 @@ input:checked + .slider::before { transform: translateX(1rem); background: var(-
             <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13"/></svg>
             Share
         </button>
-    </div>
-
-    <!-- POLL STATUS -->
-    <div class="poll-status open" id="pollStatus">
-        <div class="status-left">
-            <span class="status-pill" id="statusPill">Open</span>
-            <span class="status-text" id="statusText">Voting open · Results update in real time</span>
-        </div>
-        <div class="toggle-wrap">
-            <span>Demo: Close poll</span>
-            <label class="toggle"><input type="checkbox" id="pollToggle" onchange="togglePoll(this.checked)"><span class="slider"></span></label>
-        </div>
     </div>
 
     <!-- OFFICIAL POLL VIEW -->
@@ -420,20 +458,14 @@ input:checked + .slider::before { transform: translateX(1rem); background: var(-
             </div>
             <span class="my-picks-user" id="myPicksUser">👤 GridironGuru99</span>
         </div>
-        <!-- Live Game Tracker -->
-        <div class="live-tracker">
-            <div class="live-tracker-header">
-                <span class="live-tracker-dot"></span>
-                <span class="live-tracker-title">Live Scores</span>
-            </div>
-            <div class="games-scroll" id="liveGamesScroll"></div>
-        </div>
+        <!-- Rankings table with inline game column -->
         <div class="rankings-container">
             <div class="table-header-row">
                 <span class="th-rank">#</span>
                 <span class="th-trend"></span>
                 <span class="th-logo"></span>
                 <span class="th-team">Team</span>
+                <span class="th-game">Live Game Tracker</span>
                 <span class="th-votes">Fan Votes</span>
                 <span class="th-ap">AP</span>
             </div>
@@ -615,11 +647,10 @@ function setWeekFiltersVisible(v){
 
 function togglePoll(closed){
     pollOpen=!closed;
-    var banner=document.getElementById('pollStatus'),pill=document.getElementById('statusPill'),txt=document.getElementById('statusText'),ebTxt=document.getElementById('eyebrowText'),dot=document.getElementById('liveDot');
-    var tabVote=document.getElementById('tabVote'),tabLB=document.getElementById('tabLB');
+    var banner=document.getElementById('pollStatus'),pill=document.getElementById('statusPill'),ebTxt=document.getElementById('eyebrowText'),dot=document.getElementById('liveDot');
+    var tabVote=document.getElementById('tabVote'),tabLB=document.getElementById('tabLB'),lbl=document.getElementById('pollToggleLabel');
     if(pollOpen){
-        banner.className='poll-status open'; pill.textContent='Open';
-        txt.textContent='Voting open · Results update in real time';
+        banner.className='poll-status open'; pill.textContent='Open'; if(lbl) lbl.textContent='Close';
         ebTxt.textContent='Live Poll'; dot.style.display='';
         tabVote.classList.remove('hidden'); tabLB.classList.add('hidden');
         document.getElementById('tabFanLabel').textContent='📊 Fan Prediction Poll';
@@ -627,8 +658,7 @@ function togglePoll(closed){
         setWeekFiltersVisible(false);
         if(currentView==='leaderboard') showView('official');
     } else {
-        banner.className='poll-status closed'; pill.textContent='Closed';
-        txt.textContent='Poll closed · Week '+CURRENT_WEEK+' results finalized';
+        banner.className='poll-status closed'; pill.textContent='Closed'; if(lbl) lbl.textContent='Open';
         ebTxt.textContent='Week '+CURRENT_WEEK+' Results'; dot.style.display='none';
         tabVote.classList.add('hidden'); tabLB.classList.remove('hidden');
         document.getElementById('tabFanLabel').textContent='📊 Fan Poll Result';
@@ -651,7 +681,6 @@ function showView(v){
     else if(v==='fan'){
         document.getElementById('viewFan').classList.remove('hidden'); document.getElementById('tabFan').classList.add('tab-active');
         if(!pollOpen) document.getElementById('myPicksBar').classList.remove('hidden');
-        renderLiveGames();
         renderFanRankings(activeWeek.fan);
     }
     else if(v==='vote'){ document.getElementById('viewVote').classList.remove('hidden'); document.getElementById('tabVote').classList.add('tab-active-red'); renderTeamList(''); renderBallot(); }
@@ -706,34 +735,41 @@ function renderFanRankings(week){
             myBadge='<span class="my-pick-badge '+bClass+'">'+bLabel+'</span>';
         }
 
-        // Live score for this team (only shown when poll open)
-        var liveScoreHtml='';
-        if(pollOpen){
-            for(var lg=0;lg<liveGames.length;lg++){
-                var gm=liveGames[lg];
-                if(gm.home===t.team||gm.away===t.team){
-                    var isHome=gm.home===t.team;
-                    var myScore=isHome?gm.homeScore:gm.awayScore;
-                    var oppScore=isHome?gm.awayScore:gm.homeScore;
-                    var opp=isHome?gm.away:gm.home;
-                    var winning=myScore>oppScore, losing=myScore<oppScore;
-                    if(gm.status==='Live'){
-                        liveScoreHtml='<span style="font-family:\'Barlow Condensed\',sans-serif !important;font-size:0.6rem !important;font-weight:700 !important;letter-spacing:0.06em !important;text-transform:uppercase !important;color:var(--red) !important;margin-left:6px !important;">LIVE '+(winning?'<span style="color:var(--green) !important">'+myScore+'-'+oppScore+'</span>':losing?'<span style="color:var(--red) !important">'+myScore+'-'+oppScore+'</span>':''+myScore+'-'+oppScore)+' vs '+opp+'</span>';
-                    } else if(gm.status==='Final'){
-                        var resultLbl=winning?'W':'L';
-                        var resultColor=winning?'var(--green)':'var(--muted)';
-                        liveScoreHtml='<span style="font-family:\'Barlow Condensed\',sans-serif !important;font-size:0.6rem !important;font-weight:700 !important;letter-spacing:0.05em !important;color:'+resultColor+' !important;margin-left:6px !important;">'+resultLbl+' '+myScore+'-'+oppScore+'</span>';
-                    }
-                    break;
+        // Game column — live score or upcoming
+        var gameColHtml='<div class="game-col">';
+        var gameFound=false;
+        for(var lg=0;lg<liveGames.length;lg++){
+            var gm=liveGames[lg];
+            if(gm.home===t.team||gm.away===t.team){
+                var isHome=gm.home===t.team;
+                var myScore=isHome?gm.homeScore:gm.awayScore;
+                var oppScore=isHome?gm.awayScore:gm.homeScore;
+                var opp=isHome?gm.away:gm.home;
+                var winning=myScore>oppScore, losing=myScore<oppScore;
+                if(gm.status==='Live'){
+                    gameColHtml+='<div class="game-opp">vs '+opp+'</div>';
+                    gameColHtml+='<div class="game-meta"><span class="game-status live-label">● Live</span> <span style="font-weight:700 !important;color:'+(winning?'#00945a':losing?'#da1026':'#666')+' !important">'+myScore+'–'+oppScore+'</span> <span style="color:#888 !important">'+gm.quarter+'</span></div>';
+                } else if(gm.status==='Final'){
+                    var wl=winning?'W':'L';
+                    var wlColor=winning?'#00945a':'#666666';
+                    gameColHtml+='<div class="game-opp">vs '+opp+'</div>';
+                    gameColHtml+='<div class="game-meta"><span class="final-label" style="color:'+wlColor+' !important;font-weight:700 !important;">'+wl+' '+myScore+'–'+oppScore+'</span> <span style="color:#aaa !important">Final</span></div>';
+                } else {
+                    gameColHtml+='<div class="game-opp">'+(gm.home===t.team?'vs':'@ ')+opp+'</div>';
+                    gameColHtml+='<div class="game-meta"><span class="game-upcoming">'+gm.quarter+'</span></div>';
                 }
+                gameFound=true; break;
             }
         }
+        if(!gameFound) gameColHtml+='<div class="game-meta" style="color:#bbb !important">—</div>';
+        gameColHtml+='</div>';
 
         html+='<div class="rank-card">';
         html+='<div class="'+rn+'">'+(i+1)+'</div>';
         html+='<div class="trend-col '+tc+'"><span class="trend-arrow">'+ta+'</span><span class="trend-val">'+(t.change>0?t.change:'')+'</span></div>';
         html+=logoHtml(t.team);
-        html+='<div class="team-info"><div class="team-name">'+t.team+(t.hot?'<span class="hot-badge">🔥</span>':'')+myBadge+liveScoreHtml+'</div><div class="team-record">'+t.record+'</div></div>';
+        html+='<div class="team-info"><div class="team-name">'+t.team+(t.hot?'<span class="hot-badge">🔥</span>':'')+myBadge+'</div><div class="team-record">'+t.record+'</div></div>';
+        html+=gameColHtml;
         html+='<div class="vote-col"><div class="vote-count">'+t.votes.toLocaleString()+'</div><div class="bar-track"><div class="bar-fill" style="width:'+pct+'%"></div></div></div>';
         html+='<div class="official-badge"><div class="official-label">AP</div><div class="official-rank-num">#'+t.officialRank+'</div>'+dh+'</div>';
         html+='</div>';
@@ -854,7 +890,6 @@ setInterval(function(){ if(!pollOpen) return; liveRankings.forEach(function(r){r
 buildWeekSelect('weekSelectOfficial','official');
 buildWeekSelect('weekSelectFan','fan');
 buildWeekSelect('weekSelectLeaderboard','leaderboard');
-renderLiveGames();
 showView('official');
 renderTeamList('');
 renderBallot();
